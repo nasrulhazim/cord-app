@@ -5,6 +5,7 @@
  /*
    hook up event handlers 
  */
+ 
  function register_event_handlers()
  {
     
@@ -12,7 +13,22 @@
     $(document).on("click", "#login", function(evt)
     {
          /*global activate_page */
-         activate_page("#cord-app-list"); 
+        
+         
+         // TODO: do authenticate, 
+
+         // if valid, proceed to get location list
+        $.get(api_domain + '/location', function(result) {
+            if(result.status) {
+                generate_list(result.data, 'location-list');
+            } else {
+                alert('no records found');
+            }
+        });
+
+        activate_page("#cord-app-list"); 
+
+
     });
     
         /* button  #btn-new-cord-app */
@@ -78,5 +94,4 @@
     }
  document.addEventListener("app.Ready", register_event_handlers, false);
 })();
-
-
+        

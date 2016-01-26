@@ -23,3 +23,24 @@
 
 
 // ...additional event handlers here...
+var api_domain = 'http://simple-api.dev';
+
+var info = function(id) {
+    $.get(api_domain + '/location/' + id, function(data) {
+        var info = data.data;
+        alert(info.name + ' location at ' + info.latitude + ', ' + info.longitude);
+    });
+}
+
+var generate_list = function(data,container) {
+	$('#'+container).html('');
+	var list = data;
+    var str = '';
+    $.each(list, function(index, val) {
+        str += '<a onclick="info('+val.id+')" style="cursor:pointer;" class="list-group-item allow-badge widget uib_w_8" data-uib="twitter%20bootstrap/list_item" data-ver="1">'
+        str += '<h4 class="list-group-item-heading">'+val.name+'</h4>';
+        str += '<p class="list-group-item-text">'+val.description+'</p>';
+        str += '</a>';
+    });
+    $('#'+container).append(str);
+}
